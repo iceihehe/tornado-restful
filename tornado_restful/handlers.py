@@ -28,3 +28,6 @@ class ApiHandler(tornado.web.RequestHandler):
         if isinstance(exception, MissingArgumentError):
             self.set_status(400)
             self.fail(Code.MISSING_ARGUMENT)
+
+        else:
+            self.fail(Code.SYSTEM_ERROR)

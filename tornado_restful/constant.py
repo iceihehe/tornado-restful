@@ -3,9 +3,11 @@
 class Code:
 
     SUCCESS = 1000
-    MISSING_ARGUMENT = 1001
+    SYSTEM_ERROR = 1001
+    MISSING_ARGUMENT = 1002
 
     msg = {
         SUCCESS: 'Success',
-        MISSING_ARGUMENT: 'Argument is missing'
+        SYSTEM_ERROR: 'System error',
+        MISSING_ARGUMENT: 'Argument is missing',
     }
