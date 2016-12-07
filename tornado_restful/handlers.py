@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import tornado.web
-from tornado.web import MissingArgumentError
-
-from .constant import Code
 
 
 class ApiHandler(tornado.web.RequestHandler):
@@ -12,9 +9,9 @@ class ApiHandler(tornado.web.RequestHandler):
 
         self.set_header('Content-Type', 'application/json')
 
-    def fail(self, code):
+    def fail(self, msg):
 
-        self.write({'code': code, 'msg': Code.msg.get(code)})
+        self.write({'msg': msg})
         self.finish()
 
     def write_error(self, status_code, **kwargs):
@@ -25,9 +22,8 @@ class ApiHandler(tornado.web.RequestHandler):
 
         exception = kwargs['exc_info'][1]
 
-        if isinstance(exception, MissingArgumentError):
-            self.set_status(400)
-            self.fail(Code.MISSING_ARGUMENT)
+        if status_code == 500:
+            self.fail('System error')
 
         else:
-            self.fail(Code.SYSTEM_ERROR)
+            self.fail(get_exc_message(exception))
